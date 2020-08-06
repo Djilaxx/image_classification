@@ -1,7 +1,7 @@
-from pytorch_lightning.metrics import functional
-
 import warnings
 warnings.filterwarnings("ignore")
+
+from pytorch_lightning.metrics import functional
 
 metrics_dict = {
     "ACCURACY" : functional.accuracy,

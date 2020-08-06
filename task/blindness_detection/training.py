@@ -17,11 +17,11 @@ from sklearn import model_selection
 #My own modules
 from image_dataset import image_ds
 from utils import early_stopping, folding
-from .train_fct import Trainer
+from trainer.train_fct import Trainer
 from .config import config
 from .model_dispatcher import models
 
-def run(folds, model):
+def run(folds, model, metric):
 
     #Creating the folds from the training data
     folding.create_folds(datapath=config.main.TRAIN_FILE,
@@ -119,12 +119,12 @@ def run(folds, model):
             trainer.trn_function(train_loader)
             #Evaluation phase
             print("Evaluating the model...")
-            acc = trainer.eval_function(valid_loader)
+            metric_value = trainer.eval_function(valid_loader, metric)
             #Metrics
-            print(f"Validation Accuracy = {acc}")
+            print(f"Validation {metric} = {metric_value}")
 
             Path(os.path.join(config.main.PROJECT_PATH, "model_output/")).mkdir(parents=True, exist_ok=True)
-            es(acc, model,
+            es(metric_value, model,
                model_path=os.path.join(config.main.PROJECT_PATH, "model_output/", f"model_{fold}.bin"))
             if es.early_stop:
                 print("Early Stopping")
@@ -133,8 +133,9 @@ def run(folds, model):
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument("--folds", type=int)
-parser.add_argument("--model", type=str)
+parser.add_argument("--folds", type=int, default=5)
+parser.add_argument("--model", type=str, default="RESNET18")
+parser.add_argument("--metric", type=str, default="ACCURACY")
 
 args = parser.parse_args()
 
@@ -143,6 +144,7 @@ if __name__ == "__main__":
 
     run(
         folds=args.folds,
-        model=args.model
+        model=args.model,
+        metric=args.metric
     )
 
