@@ -9,9 +9,3 @@ models = {
         pt=True)
 }
 
-metrics = {
-    "ACCURACY" : functional.accuracy,
-    "AUROC" : functional.auroc,
-    "CONFUSION_MATRIX" : functional.confusion_matrix,
-    "F1_SCORE" : functional.f1_score
-}
