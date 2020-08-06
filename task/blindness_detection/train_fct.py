@@ -6,7 +6,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 from pytorch_lightning.metrics.functional import accuracy
-
+from .model_dispatcher import metrics
 class Trainer:
     '''
     trn_function train the model for one epoch
@@ -25,7 +25,7 @@ class Trainer:
 
         tk0 = tqdm(data_loader, total=len(data_loader))
 
-        for bi, data in enumerate(tk0):
+        for _, data in enumerate(tk0):
             images = data["images"]
             labels = data["labels"]
 
@@ -48,13 +48,12 @@ class Trainer:
 
     def eval_function(self, data_loader):
         self.model.eval()
-
         losses = AverageMeter()
         ACC = AverageMeter()
 
         with torch.no_grad():
             tk0 = tqdm(data_loader, total=len(data_loader))
-            for bi, data in enumerate(tk0):
+            for _, data in enumerate(tk0):
                 images = data["images"]
                 labels = data["labels"]
 
@@ -66,6 +65,7 @@ class Trainer:
 
                 predictions = torch.softmax(output, dim=1)
                 _, predictions = torch.max(predictions, dim=1)
+
                 acc = accuracy(labels, predictions)
 
                 losses.update(loss.item(), images.size(0))
