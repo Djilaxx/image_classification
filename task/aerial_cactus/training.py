@@ -20,6 +20,7 @@ from utils import early_stopping, folding
 from trainer.train_fct import Trainer
 from .config import config
 from .model_dispatcher import models
+from .augment import Augmentations
 
 def run(folds, model, metric):
 
@@ -55,24 +56,6 @@ def run(folds, model, metric):
         model.load_state_dict(init)
         model.to(device)
 
-        #Image_Net values
-        mean = (0.485, 0.456, 0.406)
-        std = (0.229, 0.224, 0.225)
-        #Augmentations
-        train_augment = transforms.Compose(
-            [
-                transforms.ToTensor(),
-                transforms.Normalize(mean, std)
-            ]
-        )   
-
-        valid_augment = transforms.Compose(
-            [
-                transforms.ToTensor(),
-                transforms.Normalize(mean, std)
-            ]
-        )
-
         #Create dataset and dataloader
         trn_img = df_train[config.main.IMAGE_ID].values.tolist()
         trn_img = [os.path.join(train_path, i) for i in trn_img]
@@ -86,7 +69,7 @@ def run(folds, model, metric):
             image_path=trn_img,
             resize=image_size,
             label=trn_labels,
-            transforms=train_augment
+            transforms=Augmentations["train"]
         )
 
         train_loader = torch.utils.data.DataLoader(
@@ -97,7 +80,7 @@ def run(folds, model, metric):
             image_path=valid_img,
             resize=image_size,
             label=valid_labels,
-            transforms=valid_augment
+            transforms=Augmentations["valid"]
         )
 
         valid_loader = torch.utils.data.DataLoader(
