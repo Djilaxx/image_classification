@@ -1,7 +1,6 @@
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-import argparse
 import gc
 import pandas as pd
 import numpy as np
@@ -16,8 +15,8 @@ from sklearn import model_selection
 
 #My own modules
 from image_dataset import image_ds
-from utils import early_stopping, folding
-from .train_fct import Trainer
+from utils import early_stopping, folding, parser
+from trainer.train_fct import Trainer
 from .config import config
 from .model_dispatcher import models
 from .augment import Augmentations
@@ -114,13 +113,8 @@ def run(folds, model):
                 break
             gc.collect()
 
-parser = argparse.ArgumentParser()
-
-parser.add_argument("--folds", type=int, default=5)
-parser.add_argument("--model", type=str, default="RESNET18")
-parser.add_argument("--metric", type=str, default="ACCURACY")
-
-args = parser.parse_args()
+#Create the parser
+args = parser.create_parser()
 
 if __name__ == "__main__":
     print("Training start...")
