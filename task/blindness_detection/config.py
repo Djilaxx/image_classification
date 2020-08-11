@@ -20,3 +20,4 @@ config.main.LR = 1e-4                                                           
 config.main.device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")     #Device to use for training
 config.main.N_CLASS = 5                                                                             #Number of class in the target variable
 config.main.image_size = (128, 128)                                                                 #Image size
+config.main.PT = False

@@ -21,5 +21,6 @@ config.main.LR = 1e-4
 config.main.device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 config.main.N_CLASS = 2
 config.main.image_size = (128, 128)
+config.main.PT = False
 
 config.RESNET18 = edict()
