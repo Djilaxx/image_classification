@@ -40,7 +40,9 @@ The trainer is a class that is used to train the model for one epoch and validat
 
 ## **To do** 
 ---
+* Big change => Moving from Pytorch to Pytorch-Lightning
 * Add an inference file for each task
+* Add scheduler
 * Add more models
 * Add augmentation files so adding or removing image augmentation is done outside the run function. 
 * Add TPU support for the dataset and training. 
