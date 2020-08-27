@@ -20,7 +20,7 @@ class Trainer:
         self.scheduler = scheduler
         self.criterion = criterion
 
-    def trn_function(self, data_loader):
+    def training_step(self, data_loader):
         self.model.train()
         losses = AverageMeter()
 
@@ -47,7 +47,7 @@ class Trainer:
             losses.update(loss.item(), images.size(0))
             tk0.set_postfix(loss=losses.avg)
 
-    def eval_function(self, data_loader, metric):
+    def eval_step(self, data_loader, metric):
         self.model.eval()
         losses = AverageMeter()
         metrics_avg = AverageMeter()

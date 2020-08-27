@@ -14,16 +14,15 @@ class Image_dataset:
     transforms : if not None, transform will be applied on images
     '''
 
-    def __init__(self, image_path, resize, label, transforms=None, test=False):
+    def __init__(self, image_path, resize, label=None, transforms=None, test=False):
         self.image_path = image_path
         self.resize = resize
         self.label = label
         self.transforms = transforms
+        self.test = test
 
     def __getitem__(self, item):
         image = Image.open(self.image_path[item])
-        label = self.label[item]
-
         if self.resize is not None:
             image = image.resize(
                 (self.resize[1], self.resize[0]), resample=Image.BILINEAR
@@ -32,10 +31,16 @@ class Image_dataset:
         if self.transforms:
             image = self.transforms(image)
 
-        return {
-            "images": image,
-            "labels": torch.tensor(label)
-        }
+        if self.test is False:
+            label = self.label[item]
+            return {
+                "images": image,
+                "labels": torch.tensor(label)
+            }
+        else:
+            return {
+                "images" : image
+            }
 
     def __len__(self):
         return len(self.image_path)

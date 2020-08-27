@@ -8,7 +8,7 @@ Augmentations = {
     'train': 
         transforms.Compose(
             [
-                transforms.RandomResizedCrop(size=config.main.image_size[0], scale=(0.8, 1.0)),
+                transforms.RandomResizedCrop(size=config.hyper.IMAGE_SIZE[0], scale=(0.8, 1.0)),
                 transforms.RandomHorizontalFlip(),
                 transforms.RandomVerticalFlip(),
                 transforms.ToTensor(),

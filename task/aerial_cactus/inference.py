@@ -6,6 +6,10 @@ import torch
 from .config import config
 
 #Load the test.csv file and get values
+def inference():
+    final_output = []
+    
+
 
 #Create the test dataset and dataloader 
 
