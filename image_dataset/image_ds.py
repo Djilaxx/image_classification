@@ -44,3 +44,30 @@ class Image_dataset:
 
     def __len__(self):
         return len(self.image_path)
+
+
+class Image_loader:
+    def __init__(self, image_path, resize, label=None, transforms=None, test=False):
+        self.image_path = image_path
+        self.resize = resize
+        self.label = label,
+        self.transforms = transforms,
+        self.test = test
+        self.image_dataset = Image_dataset(
+            image_path = self.image_path,
+            resize = self.resize,
+            label = self.label,
+            transforms = self.transforms,
+            test = self.test
+        )
+    
+    def get_loader(self, batch_size, num_workers, shuffle=True, drop_last=False):
+
+        image_data_loader = torch.utils.data.DataLoader(
+            self.image_dataset,
+            batch_size=batch_size,
+            shuffle=shuffle,
+            drop_last=drop_last,
+            num_workers=num_workers
+        )
+        return image_data_loader

@@ -25,10 +25,10 @@ config.main.N_CLASS = 2                                                         
 # HYPERPARAMETERS #
 ###################
 config.hyper = edict()
-config.hyper.TRAIN_BS = 32                                                                           #Batch size for training pass
-config.hyper.VALID_BS = 16                                                                           #Batch size for validation pass
+config.hyper.TRAIN_BS = 128                                                                           #Batch size for training pass
+config.hyper.VALID_BS = 64                                                                           #Batch size for validation pass
 config.hyper.EPOCHS = 5                                                                              #Number of epochs
 config.hyper.LR = 1e-4                                                                               #Learning rate
 config.hyper.IMAGE_SIZE = (32, 32)                                                                   #Image size
-config.hyper.PT = False                                                                              #Should the backbone model have pretrained param?
+config.hyper.PT = True                                                                              #Should the backbone model have pretrained param?
 

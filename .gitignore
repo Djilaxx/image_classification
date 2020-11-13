@@ -132,3 +132,5 @@ Blindness_Detect/
 melanoma/
 aerial-cactus-identification/
 data/
+config_kaggle.py
+config_colab_drive.py
